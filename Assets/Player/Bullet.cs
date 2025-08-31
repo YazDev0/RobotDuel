@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage;
+    public float damage = 25f;
+    public float lifeTime = 10f;
 
-    private void Start()
+    void Start()
     {
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Deal(GameObject go)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            other.GetComponent<PlayerStats>().TakeDamage(damage);
-            Destroy(gameObject);
-        }
+        // Ì÷—¯» EnemyStats √Ê PlayerStats Õ”» «·„ÊÃÊœ
+        var enemy = go.GetComponentInParent<EnemyStats>();
+        if (enemy != null) { enemy.TakeDamage(damage); return; }
+
+        var player = go.GetComponentInParent<PlayerStats>();
+        if (player != null) { player.TakeDamage(damage); return; }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.isTrigger) return; //  Ã«Â·  —Ì€—“ Ê”Ìÿ… («Œ Ì«—Ì)
+        Deal(other.gameObject);
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        Deal(col.collider.gameObject);
+        Destroy(gameObject);
     }
 }

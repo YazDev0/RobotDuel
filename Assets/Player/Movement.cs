@@ -22,16 +22,19 @@ public class Movement : MonoBehaviour
     float Velocity;
 
     [Header("Shooting")]
-    public GameObject bulletPrefab;      // Prefab الرصاصة
-    public Transform firePoint;          // مكان خروج الرصاصة
+    public GameObject bulletPrefab;      // Prefab الرصاصة (مع Rigidbody + Collider)
+    public Transform firePoint;          // مكان خروج الرصاصة من السلاح
     public float bulletSpeed = 20f;      // سرعة الرصاصة
+    public bool shootTowardCamera = true;   // true = صوب على اتجاه الكاميرا (Crosshair)
+    public float aimRayDistance = 200f;     // مدى التصويب من الكاميرا
+    public LayerMask aimMask = ~0;          // الطبقات المسموح التصويب عليها (الكل افتراضياً)
 
     void Update()
     {
-        float Horizontal = Input.GetAxis("Horizontal");
-        float Vertical = Input.GetAxis("Vertical");
+        float Horizontal = Input.GetAxis("Horizontal");   // A/D or ←/→
+        float Vertical = Input.GetAxis("Vertical");     // W/S or ↑/↓
 
-        // اتجاه الكاميرا (XZ)
+        // اتجاه الكاميرا (حركة على مستوى XZ فقط)
         Vector3 camForward = cameraTransform.forward; camForward.y = 0f; camForward.Normalize();
         Vector3 camRight = cameraTransform.right; camRight.y = 0f; camRight.Normalize();
 
@@ -40,9 +43,9 @@ public class Movement : MonoBehaviour
 
         // سرعة الركض
         float curSpeed = Input.GetKey(KeyCode.LeftShift) ? speed * sprintMultiplier : speed;
-        Vector3 horizontalMove = move * curSpeed;
+        Vector3 horizontalMove = move * curSpeed; // بدون الجاذبية
 
-        // لفّ الشخصية
+        // لفّ الشخصية باتجاه الحركة (احذف هذا البلوك لو ما تبي تدوير)
         if (move.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(move);
@@ -63,13 +66,16 @@ public class Movement : MonoBehaviour
         Character.Move(finalMove * Time.deltaTime);
 
         // -------- Animation Params --------
+        // حول متجه الحركة إلى مساحة اللاعب، حتى الـBlend Tree يعرف يمين/يسار/قدّام/خلف
         Vector3 localMove = transform.InverseTransformDirection(move);
-        float moveX = localMove.x;
-        float moveY = localMove.z;
+        float moveX = localMove.x;   // يمين/يسار
+        float moveY = localMove.z;   // قدّام/خلف
 
+        // قيم سلسة للـBlend Tree
         animator.SetFloat("MoveX", moveX, 0.1f, Time.deltaTime);
         animator.SetFloat("MoveY", moveY, 0.1f, Time.deltaTime);
 
+        // مفيد لو عندك انتقالات تعتمد على الحركة/الركض
         bool isMoving = move.sqrMagnitude > 0.0001f;
         animator.SetBool("IsMoving", isMoving);
         animator.SetBool("IsSprinting", Input.GetKey(KeyCode.LeftShift));
@@ -84,14 +90,44 @@ public class Movement : MonoBehaviour
 
     void Shoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (bulletPrefab == null || firePoint == null || cameraTransform == null) return;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        // احسب اتجاه الإطلاق
+        Vector3 dir;
+
+        if (shootTowardCamera)
+        {
+            // نرمي Ray من الكاميرا. إن أصاب هدفًا، نخلي الاتجاه من firePoint لنقطة الاصطدام
+            Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit, aimRayDistance, aimMask, QueryTriggerInteraction.Ignore))
+            {
+                dir = (hit.point - firePoint.position).normalized;
+            }
+            else
+            {
+                // ما أصاب شيء: نمشي على اتجاه الكاميرا
+                dir = cameraTransform.forward;
+            }
+        }
+        else
+        {
+            // اطلق مع اتجاه فوهة السلاح مباشرة
+            dir = firePoint.forward;
+        }
+
+        // انشئ الرصاصة وادفعها
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(dir));
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = firePoint.forward * bulletSpeed;
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            rb.velocity = dir * bulletSpeed;
         }
+
+        // خط فحص بصري يساعدك تتأكد من الاتجاه
+        Debug.DrawRay(firePoint.position, dir * 5f, Color.green, 1.5f);
+
         Destroy(bullet, 3f); // تدمير الرصاصة بعد 3 ثواني
     }
 
