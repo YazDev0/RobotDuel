@@ -5,8 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScri : MonoBehaviour
 {
-    public void StartScene()
+
+
+
+
+
+    public GameObject mainMenuPanel;
+    public GameObject settingsPanel;
+    public string gameSceneName = "SampleScene";
+
+    void Start()
     {
-        SceneManager.LoadScene("SampleScene");  // €Ì¯— «·«”„ ·„‘Âœ «·„” ÊÏ «·√Ê· ⁄‰œﬂ
+        Time.timeScale = 1f;
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
+        if (settingsPanel) settingsPanel.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(gameSceneName);
+    }
+
+    public void OpenSettings()
+    {
+        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (settingsPanel) settingsPanel.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        if (settingsPanel) settingsPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
