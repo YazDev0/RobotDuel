@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+
     [Header("Components")]
     public CharacterController Character;
     public Animator animator;
@@ -20,12 +21,17 @@ public class Movement : MonoBehaviour
     public float jumpPower = 2f;
     float Velocity;
 
+    [Header("Shooting")]
+    public GameObject bulletPrefab;      // Prefab الرصاصة
+    public Transform firePoint;          // مكان خروج الرصاصة
+    public float bulletSpeed = 20f;      // سرعة الرصاصة
+
     void Update()
     {
-        float Horizontal = Input.GetAxis("Horizontal");   // A/D or ←/→
-        float Vertical = Input.GetAxis("Vertical");     // W/S or ↑/↓
+        float Horizontal = Input.GetAxis("Horizontal");
+        float Vertical = Input.GetAxis("Vertical");
 
-        // اتجاه الكاميرا (حركة على مستوى XZ فقط)
+        // اتجاه الكاميرا (XZ)
         Vector3 camForward = cameraTransform.forward; camForward.y = 0f; camForward.Normalize();
         Vector3 camRight = cameraTransform.right; camRight.y = 0f; camRight.Normalize();
 
@@ -34,9 +40,9 @@ public class Movement : MonoBehaviour
 
         // سرعة الركض
         float curSpeed = Input.GetKey(KeyCode.LeftShift) ? speed * sprintMultiplier : speed;
-        Vector3 horizontalMove = move * curSpeed; // بدون الجاذبية
+        Vector3 horizontalMove = move * curSpeed;
 
-        // لفّ الشخصية باتجاه الحركة
+        // لفّ الشخصية
         if (move.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(move);
@@ -57,23 +63,36 @@ public class Movement : MonoBehaviour
         Character.Move(finalMove * Time.deltaTime);
 
         // -------- Animation Params --------
-        // حول متجه الحركة إلى مساحة اللاعب، حتى الـBlend Tree يعرف يمين/يسار/قدّام/خلف
         Vector3 localMove = transform.InverseTransformDirection(move);
-        float moveX = localMove.x;   // يمين/يسار
-        float moveY = localMove.z;   // قدّام/خلف
+        float moveX = localMove.x;
+        float moveY = localMove.z;
 
-        // قيم سلسة للـBlend Tree
         animator.SetFloat("MoveX", moveX, 0.1f, Time.deltaTime);
         animator.SetFloat("MoveY", moveY, 0.1f, Time.deltaTime);
 
-        // مفيد لو عندك انتقالات تعتمد على الحركة/الركض
         bool isMoving = move.sqrMagnitude > 0.0001f;
         animator.SetBool("IsMoving", isMoving);
         animator.SetBool("IsSprinting", Input.GetKey(KeyCode.LeftShift));
 
-        // هجوم (زر الفأرة الأيسر أو "Fire1" من Input Manager)
+        // هجوم (يطلق رصاصة + يشغل أنيميشن)
         if (Input.GetButtonDown("Fire1") || Input.GetMouseButtonDown(0))
+        {
             animator.SetTrigger("Attack");
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        if (bulletPrefab == null || firePoint == null) return;
+
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = firePoint.forward * bulletSpeed;
+        }
+        Destroy(bullet, 3f); // تدمير الرصاصة بعد 3 ثواني
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
