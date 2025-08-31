@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,36 +6,40 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     [Header("References")]
-    public Transform target;            // ÇááÇÚÈ
-    public Animator animator;           // Animator ÇáÚÏæ
-    public NavMeshAgent agent;          // NavMeshAgent Úáì ÇáÚÏæ
-    public CharacterController characterToPush; // ÇÎÊíÇÑí
+    public Transform target;            // Ø§Ù„Ù„Ø§Ø¹Ø¨
+    public Animator animator;           // Animator Ø§Ù„Ø¹Ø¯Ùˆ
+    public NavMeshAgent agent;          // NavMeshAgent Ø¹Ù„Ù‰ Ø§Ù„Ø¹Ø¯Ùˆ
+    public CharacterController characterToPush; // Ø§Ø®ØªÙŠØ§Ø±ÙŠ
 
     [Header("Movement")]
-    public float detectionRange = 15f;    // íÈÏÃ íÊİÇÚá ÅĞÇ ŞÑÈ ÇááÇÚÈ
-    public float attackRange = 8f;        // íÊæŞİ æíåÇÌã ÚäÏ åĞÇ ÇáãÏì
-    public float rotationSpeed = 12f;     // ÓÑÚÉ áİ ÇáæÌå äÍæ ÇáåÏİ
-    public float idleStopDistance = 0.1f; // íÚÊÈÑ æÇŞİ ÅĞÇ ÇáÓÑÚÉ ÃŞá ãä åĞÇ
+    public float detectionRange = 15f;
+    public float attackRange = 8f;
+    public float rotationSpeed = 12f;
+    public float idleStopDistance = 0.1f;
 
     [Header("Shooting")]
-    public GameObject bulletPrefab;     // Prefab ÇáÑÕÇÕÉ
-    public Transform firePoint;         // ãßÇä ÎÑæÌ ÇáÑÕÇÕÉ
-    public float bulletSpeed = 20f;     // ÓÑÚÉ ÇáÑÕÇÕÉ
-    public float fireCooldown = 0.4f;   // Èíä ÇáØáŞÇÊ
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 20f;
+    public float fireCooldown = 0.4f;
     private float fireTimer = 0f;
 
     [Header("Aiming (like player)")]
-    public bool aimLikePlayer = true;     // íæÌå ÇáÑÕÇÕÉ áäŞØÉ İÚáíÉ Úáì ÇááÇÚÈ
-    public float aimOffsetY = 1.2f;       // ÇÑÊİÇÚ ÇáÊÕæíÈ (ÕÏÑ/ÑÃÓ ÇááÇÚÈ)
-    public float aimRayDistance = 200f;   // ãÏì ÇáÑÄíÉ
-    public LayerMask aimMask = ~0;        // ÇáØÈŞÇÊ ÇáãÓãæÍÉ (Çáßá ÇİÊÑÇÖíÇğ)
+    public bool aimLikePlayer = true;
+    public float aimOffsetY = 1.2f;
+    public float aimRayDistance = 200f;
+    public LayerMask aimMask = ~0;
 
     [Header("Anim Params")]
     public string moveXParam = "MoveX";
     public string moveYParam = "MoveY";
     public string isMovingParam = "IsMoving";
-    public string isSprintingParam = "IsSprinting"; // ÛíÑ ãÓÊÎÏã åäÇ
+    public string isSprintingParam = "IsSprinting";
     public string attackTrigger = "Attack";
+
+    [Header("Audio")]
+    public AudioSource audioSource;     // AudioSource Ù…Ø¶Ø§Ù Ø¹Ù„Ù‰ Ø§Ù„Ø¹Ø¯Ùˆ
+    public AudioClip shootClip;         // ØµÙˆØª Ø§Ù„Ø·Ù„Ù‚Ø©
 
     const float DEAD = 0.1f;
 
@@ -47,7 +51,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        if (agent) agent.updateRotation = false; // Èäáİø íÏæíÇğ
+        if (agent) agent.updateRotation = false;
     }
 
     void Update()
@@ -118,14 +122,11 @@ public class EnemyAI : MonoBehaviour
 
             if (aimLikePlayer && target)
             {
-                // äŞØÉ ÇáÊÕæíÈ (ÕÏÑ/ÑÃÓ ÇááÇÚÈ)
                 Vector3 aimPoint = target.position + Vector3.up * aimOffsetY;
                 dir = (aimPoint - firePoint.position).normalized;
 
-                // Raycast ãä İæåÉ ÇáÓáÇÍ ÈÇÊÌÇå ÇáåÏİ áÖÈØ ÇáÇÕØÏÇã (ÌÏÇÑ ãËáÇğ)
                 if (Physics.Raycast(firePoint.position, dir, out RaycastHit hit, aimRayDistance, aimMask, QueryTriggerInteraction.Ignore))
                 {
-                    // æÌøå ááøãÓ ÇáäŞØÉ ãÈÇÔÑÉ
                     dir = (hit.point - firePoint.position).normalized;
                 }
             }
@@ -138,6 +139,10 @@ public class EnemyAI : MonoBehaviour
                 rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
                 rb.velocity = dir * bulletSpeed;
             }
+
+            // ğŸµ Ø´ØºÙ„ ØµÙˆØª Ø§Ù„Ø·Ù„Ù‚Ø©
+            if (audioSource && shootClip)
+                audioSource.PlayOneShot(shootClip);
 
             Debug.DrawRay(firePoint.position, dir * 5f, Color.green, 1.5f);
             Destroy(bullet, 3f);

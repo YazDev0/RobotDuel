@@ -121,6 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 50
   lifeTime: 10
+  spawnSfx: {fileID: 8300000, guid: 05ffa9bfb7a065843ba46cc778c334b8, type: 3}
+  spawnVolume: 1
 --- !u!54 &4809195781439861823
 Rigidbody:
   m_ObjectHideFlags: 0
