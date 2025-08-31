@@ -1,46 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseUI;
-    private bool isPaused = false;
+    public GameObject pausePanel;      // Panel ‘›«› ›ÌÂ √“—«—
+    public string mainMenuScene = "MainMenu";
+
+    public static bool IsPaused { get; private set; }
+
+    void Start()
+    {
+        if (pausePanel) pausePanel.SetActive(false);
+        IsPaused = false;
+    }
 
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            if (IsPaused) Resume();
+            else Pause();
         }
     }
 
-    public void PauseGame()
+    public void Resume()
     {
-        pauseUI.SetActive(true);   
-        Time.timeScale = 0f;       
-        isPaused = true;
+        if (pausePanel) pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+        IsPaused = false;
     }
 
-    public void ResumeGame()
+    void Pause()
     {
-        pauseUI.SetActive(false);  
-        Time.timeScale = 1f;       
-        isPaused = false;
+        if (pausePanel) pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+        IsPaused = true;
     }
 
-    public void QuitGame()
+    // Buttons
+    public void OpenSettingsInPause() { /* «› Õ Panel ≈⁄œ«œ«  ·Ê  »€Ï */ }
+    public void BackToMainMenu()
     {
-        Debug.Log("Quit Game!");
-        Application.Quit(); 
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuScene);
     }
- }
-
+}

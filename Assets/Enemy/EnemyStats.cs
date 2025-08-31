@@ -29,7 +29,7 @@ public class EnemyStats : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("⚠️ WinGameManager غير مربوط في EnemyStats");
+            Debug.LogWarning("!!!!!");
         }
 
         Destroy(gameObject);
