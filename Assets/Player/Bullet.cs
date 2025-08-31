@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    public float damage;
+
+    private void Start()
     {
-        //  œ„Ì— ⁄‰œ «·«’ÿœ«„
-        Destroy(gameObject);
+        Destroy(gameObject, 10f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            other.GetComponent<PlayerStats>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }
