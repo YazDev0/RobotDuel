@@ -7,8 +7,6 @@ public class EnemyStats : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
 
-    public WinGameManager winGameManager; // 🟢 اربطه من الـInspector
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -23,15 +21,23 @@ public class EnemyStats : MonoBehaviour
 
     void Die()
     {
-        if (winGameManager != null)
-        {
-            winGameManager.ShowWinScreen();
-        }
-        else
-        {
-            Debug.LogWarning("!!!!!");
-        }
-
         Destroy(gameObject);
+
+        // بعد ما يموت العدو، نحسب عدد الأعداء المتبقين
+        int remaining = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (remaining == 0)
+        {
+            // كل الأعداء ماتوا → فوز
+            WinGameManager win = FindObjectOfType<WinGameManager>();
+            if (win != null)
+            {
+                win.ShowWinScreen();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ WinGameManager not found in scene!");
+            }
+        }
     }
 }
