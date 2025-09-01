@@ -121,7 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 50
   lifeTime: 10
-  hitEffectPrefab: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
+  hitEffectPrefab: {fileID: 100002, guid: 6890a03af913b874092fbb1e8337747d, type: 3}
+  muzzleEffectPrefab: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
 --- !u!54 &4809195781439861823
 Rigidbody:
   m_ObjectHideFlags: 0

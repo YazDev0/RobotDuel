@@ -9,10 +9,19 @@ public class Bullet : MonoBehaviour
     public float lifeTime = 10f;
 
     [Header("Effects")]
-    public GameObject hitEffectPrefab;   // 🎇 تأثير الاصطدام
+    public GameObject hitEffectPrefab;     // 🎇 تأثير الاصطدام
+    public GameObject muzzleEffectPrefab;  // 🔥 تأثير الفوهة
 
     void Start()
     {
+        // 🟢 تأثير الفوهة عند ظهور الرصاصة
+        if (muzzleEffectPrefab != null)
+        {
+            GameObject muzzle = Instantiate(muzzleEffectPrefab, transform.position, transform.rotation);
+            Destroy(muzzle, 1f); // يختفي بعد ثانية
+        }
+
+        // عمر الرصاصة
         Destroy(gameObject, lifeTime);
     }
 
