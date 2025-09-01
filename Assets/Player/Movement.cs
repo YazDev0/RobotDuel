@@ -51,11 +51,12 @@ public class Movement : MonoBehaviour
         Vector3 horizontalMove = move * curSpeed; // بدون الجاذبية
 
         // لفّ الشخصية باتجاه الحركة
+
         if (move.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
-        }
+        } 
 
         // قفز + جاذبية
         if (Character.isGrounded)
