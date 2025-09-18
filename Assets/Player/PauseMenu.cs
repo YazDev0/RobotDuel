@@ -40,8 +40,7 @@ public class PauseMenu : MonoBehaviour
         IsPaused = true;
     }
 
-    // Buttons
-    public void OpenSettingsInPause() { /* «› Õ Panel ≈⁄œ«œ«  ·Ê  »€Ï */ }
+
     public void BackToMainMenu()
     {
         Time.timeScale = 1f;

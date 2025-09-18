@@ -2060,8 +2060,8 @@ MonoBehaviour:
   animator: {fileID: 370684920}
   agent: {fileID: 370684918}
   characterToPush: {fileID: 370684917}
-  detectionRange: 10
-  attackRange: 5
+  detectionRange: 15.25
+  attackRange: 10.44
   rotationSpeed: 12
   idleStopDistance: 0.1
   bulletPrefab: {fileID: 5447298687072278997, guid: dc2c56334f9e01c479339ea27247ab24,
@@ -2731,7 +2731,7 @@ PrefabInstance:
     - target: {fileID: 8384488606230295406, guid: 99a79309c110fac4490f93d4f55ef436,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8943067495130278983, guid: 99a79309c110fac4490f93d4f55ef436,
         type: 3}
@@ -4764,7 +4764,7 @@ PrefabInstance:
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.19
+      value: -1.18
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
@@ -4774,7 +4774,7 @@ PrefabInstance:
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.53
+      value: -0.61
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
@@ -8013,7 +8013,7 @@ PrefabInstance:
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.83
+      value: 16.84
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
@@ -8023,7 +8023,7 @@ PrefabInstance:
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.05
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
@@ -9573,8 +9573,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 172.99536, y: -92.104355}
-  m_SizeDelta: {x: 197.1419, y: 29.5937}
+  m_AnchoredPosition: {x: 183.81, y: -107}
+  m_SizeDelta: {x: 230.5745, y: 36.6807}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163577526
 MonoBehaviour:
@@ -10570,7 +10570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.7079, y: -137.47035}
+  m_AnchoredPosition: {x: -9.7079, y: -166}
   m_SizeDelta: {x: 224.6989, y: 40.1145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275564508
@@ -13410,8 +13410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 172.99, y: -130.97952}
-  m_SizeDelta: {x: 197.15, y: 26.0109}
+  m_AnchoredPosition: {x: 187, y: -163}
+  m_SizeDelta: {x: 230.584, y: 32.2399}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528350211
 MonoBehaviour:
@@ -17827,6 +17827,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591711186, guid: f306c2fec0b5e874eae8aa1e67d753d2,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072444061591711186, guid: f306c2fec0b5e874eae8aa1e67d753d2,
+        type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -18345,8 +18350,8 @@ MonoBehaviour:
   animator: {fileID: 2141096120}
   agent: {fileID: 2141096118}
   characterToPush: {fileID: 2141096117}
-  detectionRange: 10
-  attackRange: 5
+  detectionRange: 15.25
+  attackRange: 10.44
   rotationSpeed: 12
   idleStopDistance: 0.1
   bulletPrefab: {fileID: 5447298687072278997, guid: dc2c56334f9e01c479339ea27247ab24,
@@ -18391,6 +18396,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1306352614}
+    - target: {fileID: 3006013800121394606, guid: 2099687f62e97c04f901e62e78790d19,
+        type: 3}
+      propertyPath: attackRange
+      value: 10.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006013800121394606, guid: 2099687f62e97c04f901e62e78790d19,
+        type: 3}
+      propertyPath: detectionRange
+      value: 15.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7227024078211903810, guid: 2099687f62e97c04f901e62e78790d19,
         type: 3}
       propertyPath: m_RootOrder

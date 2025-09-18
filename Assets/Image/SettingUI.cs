@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class SettingUI : MonoBehaviour
 {
     public Slider masterVolume;        // 0..1
-    public Slider mouseSensitivity;
     public GameObject panel;
 
     [Header("AudioMixer")]
@@ -15,30 +14,24 @@ public class SettingUI : MonoBehaviour
     public string exposedParam = "MasterVolume"; // «”„ «·»«—«„Ì — «·„ﬂ‘Ê›
 
     const string VOL_KEY = "vol";
-    const string SENS_KEY = "sens";
 
     void Awake()
     {
         if (masterVolume) masterVolume.onValueChanged.AddListener(OnVolumeChanged);
-        if (mouseSensitivity) mouseSensitivity.onValueChanged.AddListener(OnSensitivityChanged);
     }
 
     void Start()
     {
         float vol = PlayerPrefs.GetFloat(VOL_KEY, 1f);
-        float sens = PlayerPrefs.GetFloat(SENS_KEY, 1f);
 
         if (masterVolume) masterVolume.value = vol;
-        if (mouseSensitivity) mouseSensitivity.value = sens;
 
         OnVolumeChanged(vol);
-        OnSensitivityChanged(sens);
     }
 
     void OnDestroy()
     {
         if (masterVolume) masterVolume.onValueChanged.RemoveListener(OnVolumeChanged);
-        if (mouseSensitivity) mouseSensitivity.onValueChanged.RemoveListener(OnSensitivityChanged);
     }
 
     void OnVolumeChanged(float v)
@@ -50,11 +43,7 @@ public class SettingUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void OnSensitivityChanged(float v)
-    {
-        PlayerPrefs.SetFloat(SENS_KEY, v);
-        PlayerPrefs.Save();
-    }
+
 
     public void Close() { if (panel) panel.SetActive(false); }
 }

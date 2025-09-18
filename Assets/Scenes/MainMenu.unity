@@ -159,8 +159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 171.7, y: -81.6}
-  m_SizeDelta: {x: 207.59, y: 34.6535}
+  m_AnchoredPosition: {x: 186.33, y: -100.74535}
+  m_SizeDelta: {x: 236.85, y: 42.1442}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8702004
 MonoBehaviour:
@@ -344,7 +344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3, y: -64}
+  m_AnchoredPosition: {x: 17, y: -64}
   m_SizeDelta: {x: -613.4408, y: -433.7218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &291458508
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -484,8 +484,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 35, y: 32}
-  m_SizeDelta: {x: 50.7475, y: 15.2654}
+  m_AnchoredPosition: {x: 34.581886, y: 32}
+  m_SizeDelta: {x: 51.583775, y: 15.2654}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &397857030
 GameObject:
@@ -678,8 +678,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 175.89572, y: -125.70025}
-  m_SizeDelta: {x: 207.5871, y: 35.6154}
+  m_AnchoredPosition: {x: 186.33, y: -158.72374}
+  m_SizeDelta: {x: 236.86, y: 45.0629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &593000085
 MonoBehaviour:
@@ -1240,8 +1240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30.401, y: -119.00939}
-  m_SizeDelta: {x: -615.2422, y: -407.3629}
+  m_AnchoredPosition: {x: -37.36644, y: -119.0094}
+  m_SizeDelta: {x: -657.0349, y: -407.3629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &889362966
 MonoBehaviour:
@@ -1495,7 +1495,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterVolume: {fileID: 1157981740}
-  mouseSensitivity: {fileID: 272848465}
   panel: {fileID: 291458508}
   mixer: {fileID: 24100000, guid: 36a4066c0d02def439a70d386dd8a79e, type: 2}
   exposedParam: MasterVolume
